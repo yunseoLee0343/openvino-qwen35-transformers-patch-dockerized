@@ -1,0 +1,5 @@
+ optimum/exporters/openvino/__main__.py             |  77 ++++++++++++-
+ optimum/exporters/openvino/convert.py              |  10 +-
+ optimum/exporters/openvino/model_patcher.py        | 122 ++++++++++++++++++---
+ optimum/intel/openvino/modeling_visual_language.py |   1 +
+ 4 files changed, 188 insertions(+), 22 deletions(-)

@@ -1,0 +1,156 @@
+[issue-repro] started_at=2026-06-13T03:59:45+00:00
+[issue-repro] model_id=Qwen/Qwen3.5-0.8B
+[issue-repro] optimum_intel_ref=v2.0.0
+[issue-repro] transformers_ref=v5.11.0
+[issue-repro] run_export=1
+[env] python
+Python 3.11.15
+[setup] installing transformers from git ref=v5.11.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+[setup] cloning unpatched upstream optimum-intel
+Cloning into '/work/optimum-intel-upstream'...
+Note: switching to 'de6494c6a74200ceb58f9d681e3d0410678e06d0'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+de6494c6a74200ceb58f9d681e3d0410678e06d0
+[setup] installing unpatched upstream optimum-intel
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+[setup] re-installing requested Transformers after optimum-intel install to avoid dependency resolver downgrade
+[setup] installing transformers from git ref=v5.11.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+[env] package versions
+openvino=2026.2.0
+nncf=3.2.0
+optimum=2.2.0
+optimum-intel=2.0.0
+transformers=5.11.0
+torch=2.12.0+cpu
+torchvision=0.27.0+cpu
+numpy=2.4.6
+[source-check] locating current upstream use_cache call
+optimum/exporters/openvino/__main__.py:736:        use_cache=task.endswith("with-past"),
+[baseline] running unpatched export
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/473 [00:00<?, ?it/s]Loading weights:   8%|▊         | 38/473 [00:00<00:01, 337.73it/s]Loading weights:  17%|█▋        | 82/473 [00:00<00:01, 384.63it/s]Loading weights:  26%|██▌       | 121/473 [00:00<00:01, 320.81it/s]Loading weights:  33%|███▎      | 155/473 [00:00<00:01, 290.11it/s]Loading weights:  39%|███▉      | 185/473 [00:00<00:01, 248.06it/s]Loading weights:  49%|████▉     | 233/473 [00:00<00:00, 307.42it/s]Loading weights:  59%|█████▉    | 281/473 [00:00<00:00, 351.88it/s]Loading weights:  77%|███████▋  | 362/473 [00:00<00:00, 477.40it/s]Loading weights: 100%|██████████| 473/473 [00:01<00:00, 472.30it/s]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/local/lib/python3.11/site-packages/optimum/commands/optimum_cli.py", line 223, in <module>
+    main()
+  File "/usr/local/lib/python3.11/site-packages/optimum/commands/optimum_cli.py", line 219, in main
+    service.run()
+  File "/work/optimum-intel-upstream/optimum/commands/export/openvino.py", line 468, in run
+    main_export(
+  File "/work/optimum-intel-upstream/optimum/exporters/openvino/__main__.py", line 581, in main_export
+    submodel_paths = export_from_model(
+                     ^^^^^^^^^^^^^^^^^^
+  File "/work/optimum-intel-upstream/optimum/exporters/openvino/convert.py", line 806, in export_from_model
+    export_models(
+  File "/work/optimum-intel-upstream/optimum/exporters/openvino/convert.py", line 463, in export_models
+    export(
+  File "/work/optimum-intel-upstream/optimum/exporters/openvino/convert.py", line 219, in export
+    return export_pytorch(
+           ^^^^^^^^^^^^^^^
+  File "/work/optimum-intel-upstream/optimum/exporters/openvino/convert.py", line 316, in export_pytorch
+    patcher = config.patch_model_for_export(model, model_kwargs=model_kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/optimum-intel-upstream/optimum/exporters/openvino/model_configs.py", line 1572, in patch_model_for_export
+    return self.patcher_cls(self, model, model_kwargs=model_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/optimum-intel-upstream/optimum/exporters/openvino/model_patcher.py", line 9448, in __init__
+    from transformers.models.qwen3_5.modeling_qwen3_5 import Qwen3_5DynamicCache
+ImportError: cannot import name 'Qwen3_5DynamicCache' from 'transformers.models.qwen3_5.modeling_qwen3_5' (/usr/local/lib/python3.11/site-packages/transformers/models/qwen3_5/modeling_qwen3_5.py)
+[baseline] export_status=1
+[baseline] output directory does not exist
+[report] generating issue report
+[report] markdown=/work/reports/issue_report.md
+[report] json=/work/reports/issue_report.json
+# Issue Reproduction Report: Unpatched Qwen3.5 VLM OpenVINO INT4 Export
+
+## Purpose
+
+This report is generated from an **unpatched upstream** `optimum-intel` checkout. It is intended for issue filing, not for validating the proposed fix.
+
+## Configuration
+
+- Generated at: `2026-06-13T04:01:28.936841+00:00`
+- Model: `Qwen/Qwen3.5-0.8B`
+- Optimum Intel ref: `v2.0.0`
+- Transformers ref: `v5.11.0`
+- Baseline export status: `1`
+
+## Expected issue signal
+
+The public task is `image-text-to-text`, so the unpatched reload path derives `use_cache` from `task.endswith("with-past")`, which is false. If the exported LM IR is stateful, that task suffix is not enough to preserve the actual IR cache/state contract.
+
+## Observed signals
+
+- Export log exists: `True`
+- Weight compression observed: `False`
+- Traceback / exception observed: `True`
+- IR log exists: `False`
+- IR has cache/state signal: `False`
+- ReadValue signal observed: `False`
+- Assign signal observed: `False`
+
+## Key export lines
+
+```text
+Traceback (most recent call last):
+ImportError: cannot import name 'Qwen3_5DynamicCache' from 'transformers.models.qwen3_5.modeling_qwen3_5' (/usr/local/lib/python3.11/site-packages/transformers/models/qwen3_5/modeling_qwen3_5.py)
+```
+
+## Key IR lines
+
+```text
+```
+
+## Package versions
+
+```text
+openvino=2026.2.0
+nncf=3.2.0
+optimum=2.2.0
+optimum-intel=2.0.0
+transformers=5.11.0
+torch=2.12.0+cpu
+torchvision=0.27.0+cpu
+numpy=2.4.6
+```
+
+## Artifacts
+
+- `.gitkeep`
+- `baseline_export.log`
+- `issue_repro.log`
+- `optimum_intel_commit.txt`
+- `package_versions.txt`
+- `patch_unit.log`
+- `patched.diff`
+- `patched_diff_stat.txt`
+- `patched_export.log`
+- `report.json`
+- `report.md`
+- `run.log`
+- `upstream_commit.txt`
+
+## Maintainer note
+
+This repository has a separate patched reproducer. The issue-facing baseline report should be attached first. Then the patched report can be used to show that resolving `use_cache` from the exported LM IR changes the reload decision to `resolved_use_cache=True` and allows the export path to complete.
+[issue-repro] completed_at=2026-06-13T04:01:29+00:00

@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<net name="Model48" version="11">
+	<layers>
+		<layer id="0" name="input" type="Parameter" version="opset1">
+			<data shape="4,?" element_type="i64" />
+			<output>
+				<port id="0" precision="I64" names="input">
+					<dim>4</dim>
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="1" name="self.weight" type="Const" version="opset1">
+			<data element_type="i8" shape="2304, 768" offset="0" size="1769472" />
+			<output>
+				<port id="0" precision="I8">
+					<dim>2304</dim>
+					<dim>768</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="2" name="Convert_1563697" type="Convert" version="opset1">
+			<data destination_type="f16" />
+			<input>
+				<port id="0" precision="I8">
+					<dim>2304</dim>
+					<dim>768</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16">
+					<dim>2304</dim>
+					<dim>768</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="3" name="self.weight/scale" type="Const" version="opset1">
+			<data element_type="f16" shape="2304, 1" offset="1769472" size="4608" />
+			<output>
+				<port id="0" precision="FP16">
+					<dim>2304</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="4" name="self.weight/fq_weights_0" type="Multiply" version="opset1">
+			<data auto_broadcast="numpy" />
+			<input>
+				<port id="0" precision="FP16">
+					<dim>2304</dim>
+					<dim>768</dim>
+				</port>
+				<port id="1" precision="FP16">
+					<dim>2304</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>2304</dim>
+					<dim>768</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="5" name="ov_ext::embedding/Convert" type="Convert" version="opset1">
+			<data destination_type="f32" />
+			<rt_info>
+				<attribute name="decompression" version="0" />
+			</rt_info>
+			<input>
+				<port id="0" precision="FP16">
+					<dim>2304</dim>
+					<dim>768</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP32">
+					<dim>2304</dim>
+					<dim>768</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="6" name="ov_ext::embedding/Convert_1" type="Convert" version="opset1">
+			<data destination_type="i32" />
+			<input>
+				<port id="0" precision="I64">
+					<dim>4</dim>
+					<dim>-1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="I32">
+					<dim>4</dim>
+					<dim>-1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="7" name="ov_ext::embedding/Constant" type="Const" version="opset1">
+			<data element_type="i32" shape="" offset="1774080" size="4" />
+			<output>
+				<port id="0" precision="I32" />
+			</output>
+		</layer>
+		<layer id="8" name="ov_ext::embedding/Gather" type="Gather" version="opset8">
+			<data batch_dims="0" />
+			<input>
+				<port id="0" precision="FP32">
+					<dim>2304</dim>
+					<dim>768</dim>
+				</port>
+				<port id="1" precision="I32">
+					<dim>4</dim>
+					<dim>-1</dim>
+				</port>
+				<port id="2" precision="I32" />
+			</input>
+			<output>
+				<port id="3" precision="FP32" names="last_hidden_state">
+					<dim>4</dim>
+					<dim>-1</dim>
+					<dim>768</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="9" name="Result_179062" type="Result" version="opset1" output_names="last_hidden_state">
+			<input>
+				<port id="0" precision="FP32">
+					<dim>4</dim>
+					<dim>-1</dim>
+					<dim>768</dim>
+				</port>
+			</input>
+		</layer>
+	</layers>
+	<edges>
+		<edge from-layer="0" from-port="0" to-layer="6" to-port="0" />
+		<edge from-layer="1" from-port="0" to-layer="2" to-port="0" />
+		<edge from-layer="2" from-port="1" to-layer="4" to-port="0" />
+		<edge from-layer="3" from-port="0" to-layer="4" to-port="1" />
+		<edge from-layer="4" from-port="2" to-layer="5" to-port="0" />
+		<edge from-layer="5" from-port="1" to-layer="8" to-port="0" />
+		<edge from-layer="6" from-port="1" to-layer="8" to-port="1" />
+		<edge from-layer="7" from-port="0" to-layer="8" to-port="2" />
+		<edge from-layer="8" from-port="3" to-layer="9" to-port="0" />
+	</edges>
+	<rt_info>
+		<info name="OpenVINO Runtime" value="2026.2.0-21903-52ddc073857-releases/2026/2" />
+		<Runtime_version value="2026.2.0-21903-52ddc073857-releases/2026/2" />
+		<conversion_parameters>
+			<framework value="pytorch" />
+			<is_python_object value="True" />
+		</conversion_parameters>
+		<nncf>
+			<friendly_names_were_updated value="True" />
+			<version value="3.2.0" />
+			<weight_compression>
+				<advanced_parameters value="{'statistics_path': None, 'lora_adapter_rank': 256, 'group_size_fallback_mode': 'error', 'min_adjusted_group_size': 32, 'awq_params': {'subset_size': 32, 'percent_to_apply': 0.002, 'alpha_min': 0.0, 'alpha_max': 1.0, 'steps': 100, 'prefer_data_aware_scaling': True}, 'scale_estimation_params': {'subset_size': 64, 'initial_steps': 5, 'scale_steps': 5, 'weight_penalty': -1.0}, 'gptq_params': {'damp_percent': 0.1, 'block_size': 128, 'subset_size': 128}, 'lora_correction_params': {'adapter_rank': 8, 'num_iterations': 3, 'apply_regularization': True, 'subset_size': 128, 'use_int8_adapters': True}, 'backend_params': {}, 'codebook': None, 'adaptive_codebook_params': {'value_type': 'f8e4m3', 'across_blocks': False, 'num_elements': 16}}" />
+				<all_layers value="False" />
+				<awq value="False" />
+				<backup_mode value="int8_asym" />
+				<compression_format value="dequantize" />
+				<gptq value="False" />
+				<group_size value="-1" />
+				<ignored_scope value="[]" />
+				<lora_correction value="False" />
+				<mode value="int8_sym" />
+				<ratio value="1.0" />
+				<scale_estimation value="False" />
+				<sensitivity_metric value="weight_quantization_error" />
+			</weight_compression>
+		</nncf>
+		<optimum>
+			<nncf_version value="3.2.0" />
+			<optimum_intel_version value="2.0.0" />
+			<optimum_version value="2.2.0" />
+			<pytorch_version value="2.12.0+cpu" />
+			<transformers_version value="5.11.0" />
+		</optimum>
+	</rt_info>
+</net>

@@ -1,0 +1,68 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/473 [00:00<?, ?it/s]Loading weights:  18%|█▊        | 83/473 [00:00<00:00, 805.99it/s]Loading weights:  35%|███▍      | 164/473 [00:00<00:00, 772.76it/s]Loading weights:  53%|█████▎    | 252/473 [00:00<00:00, 818.12it/s]Loading weights:  71%|███████   | 334/473 [00:00<00:00, 792.06it/s]Loading weights: 100%|██████████| 473/473 [00:00<00:00, 926.10it/s]
+[transformers] `loss_type=None` was set in the config but it is unrecognized. Using the default loss: `ForCausalLMLoss`.
+/usr/local/lib/python3.11/site-packages/transformers/cache_utils.py:155: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if not self.is_initialized or self.keys.numel() == 0:
+[MaskRepair] Entry - past_len: 16, current_len: 16, mask_len: 16, mask_shape: torch.Size([2, 16])
+/work/optimum-intel/optimum/exporters/openvino/model_patcher.py:9463: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if past_len > 0 and mask_len == current_len:
+[MaskRepair] Condition Met: Concat triggered.
+[MaskRepair] Final mask shape: torch.Size([2, 32])
+/usr/local/lib/python3.11/site-packages/transformers/models/qwen3_5/modeling_qwen3_5.py:1182: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if position_ids.ndim == 3 and position_ids.shape[0] == 4:
+/usr/local/lib/python3.11/site-packages/transformers/masking_utils.py:208: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if (padding_length := kv_length + kv_offset - attention_mask.shape[-1]) > 0:
+/work/optimum-intel/optimum/exporters/openvino/patching_utils.py:247: TracerWarning: torch.tensor results are registered as constants in the trace. You can safely ignore this warning if you use this function to create tensors out of constant variables that would be the same every time you call this function. In any other case, this might cause the trace to be incorrect.
+  torch.tensor(0.0, device=mask.device, dtype=dtype),
+/work/optimum-intel/optimum/exporters/openvino/patching_utils.py:248: TracerWarning: torch.tensor results are registered as constants in the trace. You can safely ignore this warning if you use this function to create tensors out of constant variables that would be the same every time you call this function. In any other case, this might cause the trace to be incorrect.
+  torch.tensor(torch.finfo(torch.float16).min, device=mask.device, dtype=dtype),
+/usr/local/lib/python3.11/site-packages/transformers/integrations/sdpa_attention.py:77: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  is_causal = query.shape[2] > 1 and attention_mask is None and is_causal
+[MaskRepair] Entry - past_len: 16, current_len: 16, mask_len: 16, mask_shape: torch.Size([2, 16])
+[MaskRepair] Condition Met: Concat triggered.
+[MaskRepair] Final mask shape: torch.Size([2, 32])
+[MaskRepair] Entry - past_len: 16, current_len: 16, mask_len: 16, mask_shape: torch.Size([2, 16])
+[MaskRepair] Condition Met: Concat triggered.
+[MaskRepair] Final mask shape: torch.Size([2, 32])
+Exporting with unsupported Transformers version 5.11.0; configured maximum is 5.2.*. Compatibility is provided by the local Qwen3.5 source patches.
+Exporting with unsupported Transformers version 5.11.0; configured maximum is 5.2.*. Compatibility is provided by the local Qwen3.5 source patches.
+Exporting with unsupported Transformers version 5.11.0; configured maximum is 5.2.*. Compatibility is provided by the local Qwen3.5 source patches.
+INFO:nncf:Statistics of the bitwidth distribution:
+┍━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑
+│ Weight compression mode   │ % all parameters (layers)   │ % ratio-defining parameters (layers)   │
+┝━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
+│ int8_asym, per-channel    │ 34% (19 / 205)              │ 0% (0 / 186)                           │
+├───────────────────────────┼─────────────────────────────┼────────────────────────────────────────┤
+│ int4_asym, group size 128 │ 66% (186 / 205)             │ 100% (186 / 186)                       │
+┕━━━━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙
+Applying Weight Compression ━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% • 0:00:13 • 0:00:00
+INFO:nncf:Statistics of the bitwidth distribution:
+┍━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑
+│ Weight compression mode   │ % all parameters (layers)   │ % ratio-defining parameters (layers)   │
+┝━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
+│ int8_sym, per-channel     │ 100% (1 / 1)                │ 100% (1 / 1)                           │
+┕━━━━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙
+Applying Weight Compression ━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% • 0:00:01 • 0:00:00
+INFO:nncf:Statistics of the bitwidth distribution:
+┍━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑
+│ Weight compression mode   │ % all parameters (layers)   │ % ratio-defining parameters (layers)   │
+┝━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
+│ int8_sym, per-channel     │ 100% (1 / 1)                │ 100% (1 / 1)                           │
+┕━━━━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙
+Applying Weight Compression ━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% • 0:00:00 • 0:00:00
+INFO:nncf:Statistics of the bitwidth distribution:
+┍━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑
+│ Weight compression mode   │ % all parameters (layers)   │ % ratio-defining parameters (layers)   │
+┝━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
+│ int8_sym, per-channel     │ 100% (50 / 50)              │ 100% (50 / 50)                         │
+┕━━━━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙
+Applying Weight Compression ━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% • 0:00:02 • 0:00:00
+INFO:nncf:Statistics of the bitwidth distribution:
+┍━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑
+│ Weight compression mode   │ % all parameters (layers)   │ % ratio-defining parameters (layers)   │
+┝━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
+│ int8_sym, per-channel     │ 100% (1 / 1)                │ 100% (1 / 1)                           │
+┕━━━━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙
+Applying Weight Compression ━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% • 0:00:00 • 0:00:00

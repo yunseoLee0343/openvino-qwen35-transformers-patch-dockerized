@@ -1,0 +1,46 @@
+{
+  "generated_at": "2026-06-13T04:01:28.936841+00:00",
+  "model_id": "Qwen/Qwen3.5-0.8B",
+  "optimum_intel_ref": "v2.0.0",
+  "transformers_ref": "v5.11.0",
+  "export_status": "1",
+  "signals": {
+    "export_log_exists": true,
+    "compression_seen": false,
+    "traceback_or_exception_seen": true,
+    "ir_log_exists": false,
+    "ir_has_cache_or_state": false,
+    "readvalue_seen": false,
+    "assign_seen": false
+  },
+  "artifacts": [
+    ".gitkeep",
+    "baseline_export.log",
+    "issue_repro.log",
+    "optimum_intel_commit.txt",
+    "package_versions.txt",
+    "patch_unit.log",
+    "patched.diff",
+    "patched_diff_stat.txt",
+    "patched_export.log",
+    "report.json",
+    "report.md",
+    "run.log",
+    "upstream_commit.txt"
+  ],
+  "key_export_lines": [
+    "Traceback (most recent call last):",
+    "ImportError: cannot import name 'Qwen3_5DynamicCache' from 'transformers.models.qwen3_5.modeling_qwen3_5' (/usr/local/lib/python3.11/site-packages/transformers/models/qwen3_5/modeling_qwen3_5.py)"
+  ],
+  "key_ir_lines": [],
+  "package_versions": [
+    "openvino=2026.2.0",
+    "nncf=3.2.0",
+    "optimum=2.2.0",
+    "optimum-intel=2.0.0",
+    "transformers=5.11.0",
+    "torch=2.12.0+cpu",
+    "torchvision=0.27.0+cpu",
+    "numpy=2.4.6"
+  ]
+}

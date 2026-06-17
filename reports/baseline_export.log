@@ -1,0 +1,32 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/473 [00:00<?, ?it/s]Loading weights:   8%|▊         | 38/473 [00:00<00:01, 337.73it/s]Loading weights:  17%|█▋        | 82/473 [00:00<00:01, 384.63it/s]Loading weights:  26%|██▌       | 121/473 [00:00<00:01, 320.81it/s]Loading weights:  33%|███▎      | 155/473 [00:00<00:01, 290.11it/s]Loading weights:  39%|███▉      | 185/473 [00:00<00:01, 248.06it/s]Loading weights:  49%|████▉     | 233/473 [00:00<00:00, 307.42it/s]Loading weights:  59%|█████▉    | 281/473 [00:00<00:00, 351.88it/s]Loading weights:  77%|███████▋  | 362/473 [00:00<00:00, 477.40it/s]Loading weights: 100%|██████████| 473/473 [00:01<00:00, 472.30it/s]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/local/lib/python3.11/site-packages/optimum/commands/optimum_cli.py", line 223, in <module>
+    main()
+  File "/usr/local/lib/python3.11/site-packages/optimum/commands/optimum_cli.py", line 219, in main
+    service.run()
+  File "/work/optimum-intel-upstream/optimum/commands/export/openvino.py", line 468, in run
+    main_export(
+  File "/work/optimum-intel-upstream/optimum/exporters/openvino/__main__.py", line 581, in main_export
+    submodel_paths = export_from_model(
+                     ^^^^^^^^^^^^^^^^^^
+  File "/work/optimum-intel-upstream/optimum/exporters/openvino/convert.py", line 806, in export_from_model
+    export_models(
+  File "/work/optimum-intel-upstream/optimum/exporters/openvino/convert.py", line 463, in export_models
+    export(
+  File "/work/optimum-intel-upstream/optimum/exporters/openvino/convert.py", line 219, in export
+    return export_pytorch(
+           ^^^^^^^^^^^^^^^
+  File "/work/optimum-intel-upstream/optimum/exporters/openvino/convert.py", line 316, in export_pytorch
+    patcher = config.patch_model_for_export(model, model_kwargs=model_kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/optimum-intel-upstream/optimum/exporters/openvino/model_configs.py", line 1572, in patch_model_for_export
+    return self.patcher_cls(self, model, model_kwargs=model_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/optimum-intel-upstream/optimum/exporters/openvino/model_patcher.py", line 9448, in __init__
+    from transformers.models.qwen3_5.modeling_qwen3_5 import Qwen3_5DynamicCache
+ImportError: cannot import name 'Qwen3_5DynamicCache' from 'transformers.models.qwen3_5.modeling_qwen3_5' (/usr/local/lib/python3.11/site-packages/transformers/models/qwen3_5/modeling_qwen3_5.py)
