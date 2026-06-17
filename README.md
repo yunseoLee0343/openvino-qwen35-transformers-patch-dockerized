@@ -53,6 +53,7 @@ docker run --rm \
   -e OPTIMUM_INTEL_REF="v2.0.0-release" \
   -e TRANSFORMERS_REF="v5.11.0" \
   -e RUN_FULL_EXPORT=1 \
+  -e EXPORT_OUTPUT_DIR="/work/patched_export/qwen35_08b_int4" \
   -v "$PWD/reports:/work/reports" \
   -v "$PWD/exported_models:/work/patched_export" \
   -v "$HOME/.cache/huggingface:/root/.cache/huggingface" \
@@ -70,6 +71,7 @@ docker run --rm `
   -e OPTIMUM_INTEL_REF="v2.0.0-release" `
   -e TRANSFORMERS_REF="v5.11.0" `
   -e RUN_FULL_EXPORT=1 `
+  -e EXPORT_OUTPUT_DIR="/work/patched_export/qwen35_08b_int4" `
   -v "${PWD}\reports:/work/reports" `
   -v "${PWD}\exported_models:/work/patched_export" `
   -v "${HOME}\.cache\huggingface:/root/.cache/huggingface" `
@@ -85,6 +87,7 @@ docker run --rm \
   -e OPTIMUM_INTEL_REF="v2.0.0-release" \
   -e TRANSFORMERS_REF="v5.11.0" \
   -e RUN_FULL_EXPORT=1 \
+  -e EXPORT_OUTPUT_DIR="/work/patched_export/qwen35_08b_int4" \
   -v "$PWD/reports:/work/reports" \
   -v "$PWD/exported_models:/work/patched_export" \
   -v "$HOME/.cache/huggingface:/root/.cache/huggingface" \
@@ -93,7 +96,9 @@ docker run --rm \
 
 ## Expected Artifacts
 
-The container writes logs and reports under the mounted `reports` directory. It writes the patched exported OpenVINO model under the mounted `exported_models` directory.
+The container writes logs and reports under the mounted `reports` directory.
+It writes the patched exported OpenVINO model under `exported_models/qwen35_08b_int4`
+through `EXPORT_OUTPUT_DIR=/work/patched_export/qwen35_08b_int4`.
 
 Useful report files include:
 
@@ -189,6 +194,7 @@ docker run --rm \
   -e OPTIMUM_INTEL_REF="v2.0.0-release" \
   -e TRANSFORMERS_REF="v5.11.0" \
   -e RUN_FULL_EXPORT=1 \
+  -e EXPORT_OUTPUT_DIR="/work/patched_export/qwen35_08b_int4" \
   -v "$PWD/reports:/work/reports" \
   -v "$PWD/exported_models:/work/patched_export" \
   -v "$HOME/.cache/huggingface:/root/.cache/huggingface" \
